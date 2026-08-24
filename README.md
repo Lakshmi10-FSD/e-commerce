@@ -1,10 +1,10 @@
-# 🛍️ Mini E-Commerce Website
+# 🛍️ Mini E-Commerce Website:
 
 A simple and responsive **Mini E-Commerce Website** built using **HTML, Tailwind CSS, and JavaScript**. This project allows users to browse products, add items to the cart, and view a checkout page with total pricing.
 
 ---
 
-## 🚀 Live Features
+## 🚀 Live Features:
 
 * 🛒 Add to Cart functionality
 * 📦 Product categories (Clothes, Shoes, Watches, Bags)
@@ -15,20 +15,20 @@ A simple and responsive **Mini E-Commerce Website** built using **HTML, Tailwind
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure:
 
 ```
 ecommerce/
-│── index.html        # Main product page
-│── cart.html         # Cart / checkout page
-│── script.js         # Logic (cart, products)
-│── style.css         # Optional styling
-│── images/           # Product images
+│── index.html       
+│── cart.html         
+│── script.js         
+│── style.css         
+│── images/           
 ```
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Technologies Used:
 
 * **HTML** – Structure
 * **Tailwind CSS** – Styling & responsive design
@@ -37,7 +37,7 @@ ecommerce/
 
 ---
 
-## 🧑‍💻 How It Works
+## 🧑‍💻 How It Works:
 
 1. User browses products
 2. Clicks **Add to Cart**
@@ -47,7 +47,7 @@ ecommerce/
 
 ---
 
-## 🛍️ Product Categories
+## 🛍️ Product Categories:
 
 * 👕 Clothing (T-Shirts, Hoodies)
 * 👟 Shoes (Casual, Sports, Formal)
@@ -56,7 +56,7 @@ ecommerce/
 
 ---
 
-## ▶️ How to Run
+## ▶️ How to Run:
 
 1. Open **Notepad / VS Code**
 2. Save files (`index.html`, `script.js`, etc.)
@@ -65,7 +65,7 @@ ecommerce/
 
 ---
 
-## 🔥 Future Enhancements
+## 🔥 Future Enhancements:
 
 * 🔍 Search & filter products
 * ❤️ Wishlist feature
@@ -77,22 +77,13 @@ ecommerce/
 
 ---
 
-## 📌 Project Purpose
+## 📌 Project Purpose:
 
 This project is created for:
 
 * 🎓 Learning full-stack basics
 * 💼 Building portfolio for jobs
 * 🧠 Understanding DOM & JavaScript logic
-
----
-
-## 👩‍💻 Author
-
-**Lakshmi S**
-
-* Fullstack Developer (Fresher)
-* Skilled in HTML, Tailwind CSS, JavaScript
 
 ---
 
