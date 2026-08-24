@@ -1,67 +1,62 @@
-	<!DOCTYPE html>
-	<html>
-	<head>
-	  <title>Mini E-Commerce</title>
-	  <script src="https://cdn.tailwindcss.com"></script>
-	</head>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini E-Commerce</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-	<body class="bg-gray-100">
-		
-	<!-- Navbar -->
-	<div class="bg-black text-white p-4 flex justify-between">
-	  <h1 class="text-xl font-bold">ShopEasy</h1>
-	  <button onclick="goToCart()">Cart 🛒 <span id="count">0</span></button>
-	</div>
+<body class="bg-gray-100">
 
-	<!-- Products -->
-	<div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
+<!-- Navbar -->
+<div class="bg-black text-white p-4 flex justify-between">
+  <h1 class="text-xl font-bold">ShopEasy</h1>
+  <button onclick="goToCart()">Cart 🛒 <span id="count">0</span></button>
+</div>
 
-	<!-- Cart Section -->
-	<div id="cartPage" class="hidden p-6">
-	  <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
-	  <div id="cartItems"></div>
-	  <h2 class="text-xl mt-4">Total: ₹<span id="total">0</span></h2>
-	  <button class="bg-green-500 text-white px-4 py-2 mt-4 rounded">Checkout</button>
-	  <br><br>
-	  <button onclick="goToHome()" class="bg-gray-500 text-white px-4 py-2 rounded">Back</button>
-	</div>
+<!-- PRODUCTS -->
+<div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
 
-	<!-- 🛒 CART SECTION -->
-	<div id="cartPage" class="hidden p-6">
+<!-- CART PAGE -->
+<div id="cartPage" class="hidden p-6">
 
-	  <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+  <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
 
-	  <!-- ITEMS -->
-	  <div id="cartItems"></div>
+  <!-- ITEMS -->
+  <div id="cartItems"></div>
 
-	  <!-- 🎟 COUPON -->
-	  <div class="mt-4 flex gap-2">
-		<input id="coupon" type="text"
-		  class="border p-2 rounded w-60"
-		  placeholder="Enter coupon code">
+  <!-- COUPON -->
+  <div class="mt-4 flex gap-2">
+    <input id="coupon" type="text"
+      class="border p-2 rounded w-60"
+      placeholder="Enter coupon code">
 
-		<button onclick="applyCoupon()"
-		  class="bg-purple-500 text-white px-4 py-2 rounded">
-		  Apply
-		</button>
-	  </div>
+    <button onclick="applyCoupon()"
+      class="bg-purple-500 text-white px-4 py-2 rounded">
+      Apply
+    </button>
+  </div>
 
-	  <!-- 💰 TOTAL -->
-	  <h2 class="text-xl mt-4 font-bold">
-		Total: ₹<span id="total">0</span>
-	  </h2>
-<button onclick="generateBill()" class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
-  Checkout
-</button>
+  <!-- TOTAL -->
+  <h2 class="text-xl mt-4 font-bold">
+    Total: ₹<span id="total">0</span>
+  </h2>
 
-	  <br><br>
+  <!-- CHECKOUT -->
+  <button onclick="generateBill()"
+    class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
+    Checkout
+  </button>
 
-	  <button onclick="goToHome()"
-		class="bg-gray-500 text-white px-4 py-2 rounded">
-		Back
-	  </button>
-	  
-	  <!-- 🧾 BILL RECEIPT PAGE -->
+  <br><br>
+
+  <button onclick="goToHome()"
+    class="bg-gray-500 text-white px-4 py-2 rounded">
+    Back
+  </button>
+
+</div>
+
+<!-- 🧾 BILL RECEIPT PAGE -->
 <div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded">
 
   <h1 class="text-2xl font-bold text-center mb-2">ShopEasy</h1>
@@ -91,104 +86,91 @@
 
 </div>
 
-	</div>
+<script>
+let products = [
+  {id:1, name:"T-Shirt", price:500},
+  {id:2, name:"Shoes", price:1200},
+  {id:3, name:"Watch", price:800},
+  {id:4, name:"Bag", price:900}
+];
 
-	<script>
-	
-	
-	function goToHome() {
+let cart = [];
+let discount = 0;
+
+// SHOW PRODUCTS
+function displayProducts() {
+  let container = document.getElementById("products");
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    container.innerHTML += `
+      <div class="bg-white p-4 rounded shadow text-center">
+        <h2 class="text-lg font-bold">${p.name}</h2>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})"
+          class="bg-blue-500 text-white px-4 py-2 mt-2 rounded">
+          Add
+        </button>
+      </div>
+    `;
+  });
+}
+
+// ADD TO CART
+function addToCart(id) {
+  let item = products.find(p => p.id === id);
+  cart.push(item);
+  document.getElementById("count").innerText = cart.length;
+}
+
+// CART PAGE
+function goToCart() {
+  document.getElementById("products").classList.add("hidden");
+  document.getElementById("cartPage").classList.remove("hidden");
+  displayCart();
+}
+
+// HOME
+function goToHome() {
   document.getElementById("products").classList.remove("hidden");
   document.getElementById("cartPage").classList.add("hidden");
   document.getElementById("billPage").classList.add("hidden");
-}let products = [
-	  {id:1, name:"T-Shirt", price:500, img:"https://images.openai.com/static-rsc-4/LAtqG-hpioX3RqNKGArj6CER7W-6SJMz5f0TJZf65evTs0ezXhivSQ5r8zf0h4Ym8V64AmpNQawj1_HlfA8_YSHm5NywNh3FezzCbMqKTgm9Io7lTHRztyAP_bgrDVxuSSPg1haPJEI-8MYy7oGNVQuS4XKpMTnoaNZzB0imsQDuRUA7uSmTchfr48Mgo6fC?purpose=fullsize"},
-	  {id:2, name:"Shoes", price:1200, img:"https://images.openai.com/static-rsc-4/k1jvVeE_ixWx4jUsVB6PXgKdTUQKdxu77nxZ1hKpIjSQOLM_-a5A1Z2a0vuNw66XdIiOQ6zZYj02q4J9L_Tz4XpUOiYTC6RlaIwEkjYphdiUghPFGjD6wDflcbhYLjU0WkHzyO8v6ybkoaVqYeoSNbu4h8WjEtdknyBtCv4OZs7G198Mvs_lyBPWQ41CPA-A?purpose=fullsize"},
-	  {id:3, name:"Watch", price:800, img:"https://images.openai.com/static-rsc-4/7wRD4NymEPnOUzmV7NZeu1WCYl_uipuAlCxvGZzFCjgFxShdIFVdq3dYgDIB3pgUBLPHT68FWscKdY8_J4fBOdsPJwlYtbJsXmMn8uAisf-QuWJ5tN_iyk5YGvCQC0g5hp5V3q0C9IQ--7J4tX_kV8WK8chO753_qYKu2Qeht2s3zc-ZOhfrfe1cm3jhFLK4?purpose=fullsize"},
-	  {id:4, name:"Bag", price:900, img:"https://images.openai.com/static-rsc-4/eb-wKdKww498eqslQG_VLFQazJ3O0_ya70aWL9zM4bjtmjAO3JU6HCbOiErJj6Uc3Q7pcH2HKqE9F8SQONopL9rP1JNEMuq7l3YHaGui8qPraM4cYoalTG5ZSfEFbZ8vFNUMnRuBWk7Y-sztcQ6BKn8uEPBDRaNipj7APbl4qeY1ERFmQzxGJMtaYXlQ38lc?purpose=fullsize"} 
-	];
+}
 
-	let cart = [];
-	let discount = 0;
+// DISPLAY CART
+function displayCart() {
+  let container = document.getElementById("cartItems");
+  let total = 0;
+  container.innerHTML = "";
 
-	// 🛒 PRODUCTS
-	function displayProducts() {
-	  let container = document.getElementById("products");
-	  container.innerHTML = "";
+  cart.forEach(item => {
+    total += item.price;
 
-	  products.forEach(p => {
-		container.innerHTML += `
-		  <div class="bg-white p-4 rounded shadow text-center">
-			<img src="${p.img}" class="w-full h-40 object-cover">
-			<h2 class="text-lg font-bold">${p.name}</h2>
-			<p>₹${p.price}</p>
-			<button onclick="addToCart(${p.id})"
-			  class="bg-blue-500 text-white px-4 py-2 mt-2 rounded">
-			  Add to Cart
-			</button>
-		  </div>
-		`;
-	  });
-	}
+    container.innerHTML += `
+      <div class="flex justify-between bg-white p-2 mb-2 shadow">
+        <span>${item.name}</span>
+        <span>₹${item.price}</span>
+      </div>
+    `;
+  });
 
-	// ➕ ADD TO CART
-	function addToCart(id) {
-	  let item = products.find(p => p.id === id);
-	  cart.push(item);
-	  updateCount();
-	}
+  let finalTotal = total - (total * discount / 100);
+  document.getElementById("total").innerText = finalTotal.toFixed(0);
+}
 
-	// 🔢 COUNT
-	function updateCount() {
-	  document.getElementById("count").innerText = cart.length;
-	}
+// COUPON
+function applyCoupon() {
+  let code = document.getElementById("coupon").value;
 
-	// 🛒 CART PAGE
-	function goToCart() {
-	  document.getElementById("products").classList.add("hidden");
-	  document.getElementById("cartPage").classList.remove("hidden");
-	  displayCart();
-	}
+  if (code === "SAVE10") discount = 10;
+  else if (code === "SAVE20") discount = 20;
+  else discount = 0;
 
-	function goToHome() {
-	  document.getElementById("products").classList.remove("hidden");
-	  document.getElementById("cartPage").classList.add("hidden");
-	}
+  displayCart();
+}
 
-	// 💰 DISPLAY CART + DISCOUNT
-	function displayCart() {
-	  let container = document.getElementById("cartItems");
-	  let total = 0;
-	  container.innerHTML = "";
-
-	  cart.forEach(item => {
-		total += item.price;
-
-		container.innerHTML += `
-		  <div class="bg-white p-4 mb-2 shadow flex justify-between">
-			<span>${item.name}</span>
-			<span>₹${item.price}</span>
-		  </div>
-		`;
-	  });
-
-	  let finalTotal = total - (total * discount / 100);
-
-	  document.getElementById("total").innerText = finalTotal.toFixed(0);
-	}
-
-	function applyCoupon() {
-	  let code = document.getElementById("coupon").value;
-
-	  if (code === "SAVE10") {
-		discount = 10;
-	  } else if (code === "SAVE20") {
-		discount = 20;
-	  } else {
-		discount = 0;
-	  }
-
-	  displayCart();
-	  function generateBill() {
+// BILL GENERATE
+function generateBill() {
   document.getElementById("cartPage").classList.add("hidden");
   document.getElementById("billPage").classList.remove("hidden");
 
@@ -220,10 +202,8 @@
   `;
 }
 
-	}
+displayProducts();
+</script>
 
-	displayProducts();
-	</script>
-
-	</body>
-	</html>
+</body>
+</html>
