@@ -19,12 +19,12 @@ A simple and responsive **Mini E-Commerce Website** built using **HTML, Tailwind
 
 ##  Product Categories:
 
-* 👕 Clothing (T-Shirts, Hoodies)
-* 👟 Shoes (Casual, Sports, Formal)
-* ⌚ Watches (Elegant, Sport, Luxury)
-* 👜 Bags (Handbags, Sling, Backpack)
+*  Clothing (T-Shirts, Hoodies)
+*  Shoes (Casual, Sports, Formal)
+*  Watches (Elegant, Sport, Luxury)
+*  Bags (Handbags, Sling, Backpack)
 
-## ▶️ How to Run:
+##  How to Run:
 
 1. Open **Notepad / VS Code**
 2. Save files (`index.html`, `script.js`, etc.)
@@ -33,14 +33,14 @@ A simple and responsive **Mini E-Commerce Website** built using **HTML, Tailwind
 
 
 
-## 📌 Project Purpose:
+##  Project Purpose:
 
 This project is created for:
 
-* 🎓 Learning full-stack basics
-* 💼 Building portfolio for jobs
-* 🧠 Understanding DOM & JavaScript logic
+*  Learning full-stack basics
+*  Building portfolio for jobs
+*  Understanding DOM & JavaScript logic
 
-## ⭐ Conclusion
+##  Conclusion
 
 This Mini E-Commerce project demonstrates the **core concepts of web development** including UI design, interactivity, and data handling. It is a strong beginner-friendly project for showcasing skills on GitHub and in interviews.
