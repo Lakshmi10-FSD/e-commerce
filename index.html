@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mini E-Commerce</title>
+  <title>ShopEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -13,64 +13,45 @@
   <button onclick="goToCart()">Cart 🛒 <span id="count">0</span></button>
 </div>
 
-<!-- PRODUCTS -->
+<!-- Search -->
+<div class="p-4">
+  <input type="text" placeholder="Search product..."
+    onkeyup="searchProduct(this.value)"
+    class="border p-2 w-full rounded">
+</div>
+
+<!-- Products -->
 <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
 
-<!-- CART PAGE -->
+<!-- Cart Page -->
 <div id="cartPage" class="hidden p-6">
-
   <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
 
-  <!-- ITEMS -->
   <div id="cartItems"></div>
 
-  <!-- COUPON -->
-  <div class="mt-4 flex gap-2">
-    <input id="coupon" type="text"
-      class="border p-2 rounded w-60"
-      placeholder="Enter coupon code">
-
-    <button onclick="applyCoupon()"
-      class="bg-purple-500 text-white px-4 py-2 rounded">
-      Apply
-    </button>
-  </div>
-
-  <!-- TOTAL -->
   <h2 class="text-xl mt-4 font-bold">
     Total: ₹<span id="total">0</span>
   </h2>
 
-  <!-- CHECKOUT -->
   <button onclick="generateBill()"
     class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
     Checkout
   </button>
 
-  <br><br>
-
   <button onclick="goToHome()"
-    class="bg-gray-500 text-white px-4 py-2 rounded">
+    class="bg-gray-500 text-white px-4 py-2 mt-2 rounded">
     Back
   </button>
-
 </div>
 
-<!-- 🧾 BILL RECEIPT PAGE -->
+<!-- Bill Page -->
 <div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded">
-
-  <h1 class="text-2xl font-bold text-center mb-2">ShopEasy</h1>
+  <h1 class="text-xl font-bold text-center mb-2">ShopEasy</h1>
   <p class="text-center text-gray-500 mb-4">Bill Receipt</p>
 
-  <div id="billInfo" class="text-sm mb-4"></div>
+  <div id="billItems"></div>
 
-  <hr class="my-3">
-
-  <div id="billItems" class="space-y-2 text-sm"></div>
-
-  <hr class="my-3">
-
-  <h2 class="text-xl font-bold">
+  <h2 class="text-xl font-bold mt-4">
     Total: ₹<span id="billTotal">0</span>
   </h2>
 
@@ -83,10 +64,10 @@
     class="bg-gray-500 text-white px-4 py-2 mt-2 w-full rounded">
     Back Home
   </button>
-
 </div>
 
 <script>
+// PRODUCTS
 let products = [
   {id:1, name:"T-Shirt", price:500},
   {id:2, name:"Shoes", price:1200},
@@ -95,20 +76,19 @@ let products = [
 ];
 
 let cart = [];
-let discount = 0;
 
-// SHOW PRODUCTS
-function displayProducts() {
+// DISPLAY PRODUCTS
+function displayProducts(list = products){
   let container = document.getElementById("products");
   container.innerHTML = "";
 
-  products.forEach(p => {
+  list.forEach(p => {
     container.innerHTML += `
       <div class="bg-white p-4 rounded shadow text-center">
         <h2 class="text-lg font-bold">${p.name}</h2>
         <p>₹${p.price}</p>
         <button onclick="addToCart(${p.id})"
-          class="bg-blue-500 text-white px-4 py-2 mt-2 rounded">
+          class="bg-blue-500 text-white px-3 py-1 mt-2 rounded">
           Add
         </button>
       </div>
@@ -117,91 +97,94 @@ function displayProducts() {
 }
 
 // ADD TO CART
-function addToCart(id) {
-  let item = products.find(p => p.id === id);
-  cart.push(item);
-  document.getElementById("count").innerText = cart.length;
+function addToCart(id){
+  let item = cart.find(p => p.id === id);
+
+  if(item){
+    item.qty += 1;
+  } else {
+    let product = products.find(p => p.id === id);
+    cart.push({...product, qty:1});
+  }
+
+  updateCount();
 }
 
-// CART PAGE
-function goToCart() {
+// UPDATE COUNT
+function updateCount(){
+  let count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById("count").innerText = count;
+}
+
+// DISPLAY CART
+function displayCart(){
+  let container = document.getElementById("cartItems");
+  let total = 0;
+  container.innerHTML = "";
+
+  if(cart.length === 0){
+    container.innerHTML = "<p>Your cart is empty 😢</p>";
+  }
+
+  cart.forEach(item => {
+    total += item.price * item.qty;
+
+    container.innerHTML += `
+      <div class="flex justify-between bg-white p-2 mb-2 shadow items-center">
+        <span>${item.name} (${item.qty})</span>
+        <span>₹${item.price * item.qty}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+// NAVIGATION
+function goToCart(){
   document.getElementById("products").classList.add("hidden");
   document.getElementById("cartPage").classList.remove("hidden");
   displayCart();
 }
 
-// HOME
-function goToHome() {
+function goToHome(){
   document.getElementById("products").classList.remove("hidden");
   document.getElementById("cartPage").classList.add("hidden");
   document.getElementById("billPage").classList.add("hidden");
 }
 
-// DISPLAY CART
-function displayCart() {
-  let container = document.getElementById("cartItems");
+// SEARCH
+function searchProduct(value){
+  let filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value.toLowerCase())
+  );
+  displayProducts(filtered);
+}
+
+// BILL GENERATION
+function generateBill(){
+  document.getElementById("cartPage").classList.add("hidden");
+  document.getElementById("billPage").classList.remove("hidden");
+
+  let container = document.getElementById("billItems");
   let total = 0;
   container.innerHTML = "";
 
   cart.forEach(item => {
-    total += item.price;
+    total += item.price * item.qty;
 
     container.innerHTML += `
-      <div class="flex justify-between bg-white p-2 mb-2 shadow">
-        <span>${item.name}</span>
-        <span>₹${item.price}</span>
-      </div>
-    `;
-  });
-
-  let finalTotal = total - (total * discount / 100);
-  document.getElementById("total").innerText = finalTotal.toFixed(0);
-}
-
-// COUPON
-function applyCoupon() {
-  let code = document.getElementById("coupon").value;
-
-  if (code === "SAVE10") discount = 10;
-  else if (code === "SAVE20") discount = 20;
-  else discount = 0;
-
-  displayCart();
-}
-
-// BILL GENERATE
-function generateBill() {
-  document.getElementById("cartPage").classList.add("hidden");
-  document.getElementById("billPage").classList.remove("hidden");
-
-  let billItems = document.getElementById("billItems");
-  let billInfo = document.getElementById("billInfo");
-
-  let total = 0;
-  billItems.innerHTML = "";
-
-  cart.forEach(item => {
-    total += item.price;
-
-    billItems.innerHTML += `
       <div class="flex justify-between">
         <span>${item.name}</span>
-        <span>₹${item.price}</span>
+        <span>₹${item.price * item.qty}</span>
       </div>
     `;
   });
 
-  let finalTotal = total - (total * discount / 100);
-
-  document.getElementById("billTotal").innerText = finalTotal.toFixed(0);
-
-  billInfo.innerHTML = `
-    <p><b>Order ID:</b> #SH${Math.floor(Math.random() * 10000)}</p>
-    <p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
-    <p><b>Items:</b> ${cart.length}</p>
-  `;
+  document.getElementById("billTotal").innerText = total;
 }
 
+// INIT
 displayProducts();
 </script>
 
