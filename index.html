@@ -1,266 +1,195 @@
-<!DOCTYPE html>
 <html>
 <head>
   <title>ShopEasy</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100">	
 
-<!-- NAVBAR -->
-<div class="bg-black text-white p-4 flex justify-between items-center">
-  <h1 class="text-xl font-bold">ShopEasy</h1>
 
-  <div class="space-x-4">
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('products')">Products</button>
-    <button onclick="showPage('cart')">Cart</button>
-    <button onclick="showPage('about')">About</button>
-    <button onclick="showPage('contact')">Contact</button>
+<!-- ================= NAVBAR ================= -->  
+<div class="bg-black text-white p-4 flex justify-between items-center">  
+  
+  <h1 class="text-xl font-bold">ShopEasy</h1>  
+  
+  <!-- Desktop Menu --> 
+  <div class="hidden md:flex space-x-4">  
+    <button onclick="showPage('home')" class="hover:text-yellow-400">Home</button>  
+    <button onclick="showPage('products')" class="hover:text-yellow-400">Products</button>  
+    <button onclick="showPage('cart')" class="hover:text-yellow-400">Cart</button>  
+    <button onclick="showPage('about')" class="hover:text-yellow-400">About</button>  
+    <button onclick="showPage('contact')" class="hover:text-yellow-400">Contact</button>  
+  </div>  
+  
+  <!-- Desktop Cart --> 
+  <button onclick="showPage('cart')" class="hidden md:block">  
+    Cart 🛒 <span id="count">0</span>  
+  </button>  
+ 
+  <!-- Mobile Menu Button --> 
+  <button onclick="toggleMenu()" class="md:hidden text-3xl block">☰</button> 
+  
+</div>   
+ 
+<!-- Mobile Menu --> 
+<div id="mobileMenu" class="hidden bg-black text-white flex flex-col space-y-3 p-4 md:hidden w-full"> 
+  <button onclick="showPage('home'); toggleMenu()">Home</button> 
+  <button onclick="showPage('products'); toggleMenu()">Products</button> 
+  <button onclick="showPage('cart'); toggleMenu()">Cart</button> 
+  <button onclick="showPage('about'); toggleMenu()">About</button> 
+  <button onclick="showPage('contact'); toggleMenu()">Contact</button> 
+ 
+  <div> 
+    Cart 🛒 <span id="countMobile">0</span> 
+  </div> 
+</div>
+
+
+<!-- ================= HOME PAGE (ADVANCED) ================= -->
+<div id="homePage" class="p-6">
+
+  <!-- HERO -->
+  <div class="text-center py-10">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+      Welcome to ShopEasy 🛍️
+    </h1>
+
+    <p class="text-gray-600 text-lg mb-6">
+      Shop smarter, faster, and easier — all in one place
+    </p>
+
+    <button onclick="showPage('products')" 
+      class="bg-blue-500 text-white px-6 py-3 rounded text-lg hover:bg-blue-600">
+      Shop Now
+    </button>
   </div>
 
-  <span>🛒 <span id="count">0</span></span>
-</div>
 
-<!-- ================= HOME PAGE ================= -->
-<div id="homePage" class="p-6 text-center">
+  <!-- FEATURES -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
 
-  <h1 class="text-4xl font-bold mb-4">Welcome to ShopEasy 🛍️</h1>
-  <p class="text-gray-600 mb-6">Your one-stop online shopping platform</p>
-
-  <!-- Features -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-    
-    <div class="bg-white p-4 shadow rounded">
-      <h2 class="font-bold text-lg">🚚 Fast Delivery</h2>
-      <p class="text-gray-500">Get products delivered quickly</p>
+    <div class="bg-white p-6 rounded shadow text-center">
+      <h2 class="text-xl font-bold mb-2">🚚 Fast Delivery</h2>
+      <p class="text-gray-500">
+        Quick and reliable delivery at your doorstep within days.
+      </p>
     </div>
 
-    <div class="bg-white p-4 shadow rounded">
-      <h2 class="font-bold text-lg">💰 Best Prices</h2>
-      <p class="text-gray-500">Affordable and quality products</p>
+    <div class="bg-white p-6 rounded shadow text-center">
+      <h2 class="text-xl font-bold mb-2">💰 Best Offers</h2>
+      <p class="text-gray-500">
+        Get the best deals and discounts on all products.
+      </p>
     </div>
 
-    <div class="bg-white p-4 shadow rounded">
-      <h2 class="font-bold text-lg">🔒 Secure Payment</h2>
-      <p class="text-gray-500">100% safe transactions</p>
+    <div class="bg-white p-6 rounded shadow text-center">
+      <h2 class="text-xl font-bold mb-2">🔒 Secure Payment</h2>
+      <p class="text-gray-500">
+        Safe and trusted payment methods for worry-free shopping.
+      </p>
     </div>
 
   </div>
 
-  <button onclick="showPage('products')" 
-    class="bg-blue-500 text-white px-6 py-2 mt-6 rounded">
-    Shop Now
-  </button>
 
-</div>
+  <!-- CATEGORY SECTION -->
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold mb-6 text-center">Shop by Category</h2>
 
-<!-- ================= PRODUCTS PAGE ================= -->
-<div id="productsPage" class="hidden">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-  <!-- Search -->
-  <div class="p-4">
-    <input type="text" placeholder="Search product..."
-      onkeyup="searchProduct(this.value)"
-      class="border p-2 w-full rounded">
+      <div onclick="showPage('products')" 
+        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
+        <h3 class="font-bold">👕 Fashion</h3>
+        <p class="text-gray-500 text-sm">T-Shirts, Shoes</p>
+      </div>
+
+      <div onclick="showPage('products')" 
+        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
+        <h3 class="font-bold">⌚ Electronics</h3>
+        <p class="text-gray-500 text-sm">Watches, Gadgets</p>
+      </div>
+
+      <div onclick="showPage('products')" 
+        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
+        <h3 class="font-bold">💄 Cosmetics</h3>
+        <p class="text-gray-500 text-sm">Lipstick, Cream</p>
+      </div>
+
+      <div onclick="showPage('products')" 
+        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
+        <h3 class="font-bold">👜 Accessories</h3>
+        <p class="text-gray-500 text-sm">Bags, Wallets</p>
+      </div>
+
+    </div>
   </div>
 
-  <!-- Products -->
-  <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
+
+  <!-- WHY CHOOSE US -->
+  <div class="mt-12 bg-white p-6 rounded shadow text-center">
+    <h2 class="text-2xl font-bold mb-4">Why Choose ShopEasy?</h2>
+
+    <ul class="text-gray-600 space-y-2">
+      <li>✔ High quality products</li>
+      <li>✔ Affordable pricing</li>
+      <li>✔ Easy return policy</li>
+      <li>✔ 24/7 customer support</li>
+    </ul>
+  </div>
 
 </div>
-
-<!-- ================= CART PAGE ================= -->
-<div id="cartPage" class="hidden p-6">
-
-  <h1 class="text-2xl font-bold mb-4">Your Cart 🛒</h1>
-  <div id="cartItems"></div>
-
-  <h2 class="text-xl font-bold mt-4">
-    Total: ₹<span id="total">0</span>
-  </h2>
-
-  <button onclick="generateBill()" 
-    class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
-    Checkout
-  </button>
-
-</div>
-
-<!-- ================= ABOUT PAGE ================= -->
-<div id="aboutPage" class="hidden p-6 text-center">
-
-  <h1 class="text-3xl font-bold mb-4">About Us</h1>
-  <p class="text-gray-600 max-w-xl mx-auto">
-    ShopEasy is a modern e-commerce platform designed to provide the best online shopping experience.
-    We offer quality products at affordable prices with fast delivery and secure payments.
-  </p>
-
-</div>
-
-<!-- ================= CONTACT PAGE ================= -->
-<div id="contactPage" class="hidden p-6 max-w-md mx-auto">
-
-  <h1 class="text-2xl font-bold mb-4 text-center">Contact Us</h1>
-
-  <input type="text" placeholder="Your Name" class="border p-2 w-full mb-2 rounded">
-  <input type="email" placeholder="Your Email" class="border p-2 w-full mb-2 rounded">
-  <textarea placeholder="Your Message" class="border p-2 w-full mb-2 rounded"></textarea>
-
-  <button class="bg-blue-500 text-white w-full py-2 rounded">
-    Send Message
-  </button>
-
-</div>
-
-<!-- ================= BILL PAGE ================= -->
-<div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded">
-
-  <h1 class="text-xl font-bold text-center">ShopEasy</h1>
-  <p class="text-center text-gray-500">Bill Receipt</p>
-
-  <div id="billItems"></div>
-
-  <h2 class="text-xl font-bold mt-4">
-    Total: ₹<span id="billTotal">0</span>
-  </h2>
-
-  <button onclick="window.print()" 
-    class="bg-black text-white px-4 py-2 mt-4 w-full rounded">
-    Print
-  </button>
-
-</div>
-
 <script>
-
-// PRODUCTS
-let products = [
-  {id:1, name:"T-Shirt", price:500},
-  {id:2, name:"Shoes", price:1200},
-  {id:3, name:"Watch", price:800},
-  {id:4, name:"Bag", price:900},
-  {id:5, name:"Lipstick", price:250},
-  {id:6, name:"Face Cream", price:300}
-];
-
-let cart = [];
-
-// PAGE SWITCH
-function showPage(page){
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("productsPage").classList.add("hidden");
-  document.getElementById("cartPage").classList.add("hidden");
-  document.getElementById("aboutPage").classList.add("hidden");
-  document.getElementById("contactPage").classList.add("hidden");
-  document.getElementById("billPage").classList.add("hidden");
-
-  if(page === "home") document.getElementById("homePage").classList.remove("hidden");
-
-  if(page === "products"){
-    document.getElementById("productsPage").classList.remove("hidden");
-    displayProducts(products);
-  }
-
-  if(page === "cart"){
-    document.getElementById("cartPage").classList.remove("hidden");
-    displayCart();
-  }
-
-  if(page === "about") document.getElementById("aboutPage").classList.remove("hidden");
-  if(page === "contact") document.getElementById("contactPage").classList.remove("hidden");
+function toggleMenu(){
+  let menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("hidden");
 }
-
-// DISPLAY PRODUCTS
-function displayProducts(list){
-  let container = document.getElementById("products");
-  container.innerHTML = "";
-
-  list.forEach(p=>{
-    container.innerHTML += `
-      <div class="bg-white p-4 rounded shadow text-center">
-        <h2 class="font-bold">${p.name}</h2>
-        <p>₹${p.price}</p>
-        <button onclick="addToCart(${p.id})" 
-          class="bg-blue-500 text-white px-3 py-1 mt-2 rounded">
-          Add to Cart
-        </button>
-      </div>
-    `;
-  });
-}
-
-// SEARCH
-function searchProduct(value){
-  let filtered = products.filter(p =>
-    p.name.toLowerCase().includes(value.toLowerCase())
-  );
-  displayProducts(filtered);
-}
-
-// CART
-function addToCart(id){
-  let item = cart.find(p=>p.id===id);
-
-  if(item){
-    item.qty++;
-  }else{
-    let product = products.find(p=>p.id===id);
-    cart.push({...product, qty:1});
-  }
-
-  updateCount();
-}
-
-function updateCount(){
-  let count = cart.reduce((sum,item)=>sum+item.qty,0);
-  document.getElementById("count").innerText = count;
-}
-
-function displayCart(){
-  let container = document.getElementById("cartItems");
-  let total = 0;
-  container.innerHTML = "";
-
-  cart.forEach(item=>{
-    total += item.price * item.qty;
-    container.innerHTML += `
-      <div class="flex justify-between bg-white p-2 mb-2">
-        <span>${item.name} (${item.qty})</span>
-        <span>₹${item.price * item.qty}</span>
-      </div>
-    `;
-  });
-
-  document.getElementById("total").innerText = total;
-}
-
-// BILL
-function generateBill(){
-  document.getElementById("cartPage").classList.add("hidden");
-  document.getElementById("billPage").classList.remove("hidden");
-
-  let container = document.getElementById("billItems");
-  let total = 0;
-  container.innerHTML = "";
-
-  cart.forEach(item=>{
-    total += item.price * item.qty;
-    container.innerHTML += `
-      <div class="flex justify-between">
-        <span>${item.name}</span>
-        <span>₹${item.price * item.qty}</span>
-      </div>
-    `;
-  });
-
-  document.getElementById("billTotal").innerText = total;
-}
-
-// INIT
-showPage("home");
-
 </script>
 
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-black text-white mt-10">
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+
+    <!-- About -->
+    <div>
+      <h2 class="text-lg font-bold mb-2">ShopEasy</h2>
+      <p class="text-gray-400 text-sm">
+        ShopEasy is your trusted online shopping platform offering quality products 
+        at affordable prices with fast delivery and secure payments.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-bold mb-2">Quick Links</h2>
+      <ul class="text-gray-400 space-y-1 text-sm">
+        <li><button onclick="showPage('home')" class="hover:text-white">Home</button></li>
+        <li><button onclick="showPage('products')" class="hover:text-white">Products</button></li>
+        <li><button onclick="showPage('cart')" class="hover:text-white">Cart</button></li>
+        <li><button onclick="showPage('about')" class="hover:text-white">About</button></li>
+        <li><button onclick="showPage('contact')" class="hover:text-white">Contact</button></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h2 class="text-lg font-bold mb-2">Contact</h2>
+      <p class="text-gray-400 text-sm">📧 support@shopeasy.com</p>
+      <p class="text-gray-400 text-sm">📞 +91 98765 43210</p>
+      <p class="text-gray-400 text-sm">📍 India</p>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="text-center text-gray-500 text-sm border-t border-gray-700 py-3">
+    © 2026 ShopEasy. All rights reserved.
+  </div>
+
+</footer>
 </body>
 </html>
