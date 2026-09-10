@@ -14,28 +14,50 @@
   <div class="space-x-4">
     <button onclick="showPage('home')">Home</button>
     <button onclick="showPage('products')">Products</button>
-    <button onclick="showPage('cosmetics')">Cosmetics</button>
+    <button onclick="showPage('cart')">Cart</button>
+    <button onclick="showPage('about')">About</button>
+    <button onclick="showPage('contact')">Contact</button>
   </div>
 
-  <button onclick="goToCart()">Cart 🛒 <span id="count">0</span></button>
+  <span>🛒 <span id="count">0</span></span>
 </div>
 
-<!-- HOME PAGE -->
+<!-- ================= HOME PAGE ================= -->
 <div id="homePage" class="p-6 text-center">
-  <h1 class="text-3xl font-bold mb-4">Welcome to ShopEasy 🛍️</h1>
-  <p class="text-gray-600">Best place to buy your favorite products</p>
 
-  <div class="mt-6">
-    <button onclick="showPage('products')" 
-      class="bg-blue-500 text-white px-4 py-2 rounded">
-      Shop Now
-    </button>
+  <h1 class="text-4xl font-bold mb-4">Welcome to ShopEasy 🛍️</h1>
+  <p class="text-gray-600 mb-6">Your one-stop online shopping platform</p>
+
+  <!-- Features -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    
+    <div class="bg-white p-4 shadow rounded">
+      <h2 class="font-bold text-lg">🚚 Fast Delivery</h2>
+      <p class="text-gray-500">Get products delivered quickly</p>
+    </div>
+
+    <div class="bg-white p-4 shadow rounded">
+      <h2 class="font-bold text-lg">💰 Best Prices</h2>
+      <p class="text-gray-500">Affordable and quality products</p>
+    </div>
+
+    <div class="bg-white p-4 shadow rounded">
+      <h2 class="font-bold text-lg">🔒 Secure Payment</h2>
+      <p class="text-gray-500">100% safe transactions</p>
+    </div>
+
   </div>
+
+  <button onclick="showPage('products')" 
+    class="bg-blue-500 text-white px-6 py-2 mt-6 rounded">
+    Shop Now
+  </button>
+
 </div>
 
-<!-- PRODUCTS PAGE -->
+<!-- ================= PRODUCTS PAGE ================= -->
 <div id="productsPage" class="hidden">
-  
+
   <!-- Search -->
   <div class="p-4">
     <input type="text" placeholder="Search product..."
@@ -43,35 +65,57 @@
       class="border p-2 w-full rounded">
   </div>
 
+  <!-- Products -->
   <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
+
 </div>
 
-<!-- COSMETICS PAGE -->
-<div id="cosmeticsPage" class="hidden p-6">
-  <h1 class="text-2xl font-bold mb-4">Cosmetics 💄</h1>
-  <div id="cosmeticsProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
-</div>
-
-<!-- CART PAGE -->
+<!-- ================= CART PAGE ================= -->
 <div id="cartPage" class="hidden p-6">
-  <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+
+  <h1 class="text-2xl font-bold mb-4">Your Cart 🛒</h1>
   <div id="cartItems"></div>
 
-  <h2 class="text-xl mt-4 font-bold">
+  <h2 class="text-xl font-bold mt-4">
     Total: ₹<span id="total">0</span>
   </h2>
 
-  <button onclick="generateBill()" class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
+  <button onclick="generateBill()" 
+    class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
     Checkout
   </button>
 
-  <button onclick="showPage('home')" class="bg-gray-500 text-white px-4 py-2 mt-2 rounded">
-    Back
-  </button>
 </div>
 
-<!-- BILL PAGE -->
+<!-- ================= ABOUT PAGE ================= -->
+<div id="aboutPage" class="hidden p-6 text-center">
+
+  <h1 class="text-3xl font-bold mb-4">About Us</h1>
+  <p class="text-gray-600 max-w-xl mx-auto">
+    ShopEasy is a modern e-commerce platform designed to provide the best online shopping experience.
+    We offer quality products at affordable prices with fast delivery and secure payments.
+  </p>
+
+</div>
+
+<!-- ================= CONTACT PAGE ================= -->
+<div id="contactPage" class="hidden p-6 max-w-md mx-auto">
+
+  <h1 class="text-2xl font-bold mb-4 text-center">Contact Us</h1>
+
+  <input type="text" placeholder="Your Name" class="border p-2 w-full mb-2 rounded">
+  <input type="email" placeholder="Your Email" class="border p-2 w-full mb-2 rounded">
+  <textarea placeholder="Your Message" class="border p-2 w-full mb-2 rounded"></textarea>
+
+  <button class="bg-blue-500 text-white w-full py-2 rounded">
+    Send Message
+  </button>
+
+</div>
+
+<!-- ================= BILL PAGE ================= -->
 <div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded">
+
   <h1 class="text-xl font-bold text-center">ShopEasy</h1>
   <p class="text-center text-gray-500">Bill Receipt</p>
 
@@ -81,21 +125,23 @@
     Total: ₹<span id="billTotal">0</span>
   </h2>
 
-  <button onclick="window.print()" class="bg-black text-white px-4 py-2 mt-4 w-full rounded">
+  <button onclick="window.print()" 
+    class="bg-black text-white px-4 py-2 mt-4 w-full rounded">
     Print
   </button>
+
 </div>
 
 <script>
 
-// PRODUCTS DATA
+// PRODUCTS
 let products = [
-  {id:1, name:"T-Shirt", price:500, category:"products"},
-  {id:2, name:"Shoes", price:1200, category:"products"},
-  {id:3, name:"Watch", price:800, category:"products"},
-  {id:4, name:"Bag", price:900, category:"products"},
-  {id:5, name:"Lipstick", price:250, category:"cosmetics"},
-  {id:6, name:"Face Cream", price:300, category:"cosmetics"}
+  {id:1, name:"T-Shirt", price:500},
+  {id:2, name:"Shoes", price:1200},
+  {id:3, name:"Watch", price:800},
+  {id:4, name:"Bag", price:900},
+  {id:5, name:"Lipstick", price:250},
+  {id:6, name:"Face Cream", price:300}
 ];
 
 let cart = [];
@@ -104,19 +150,25 @@ let cart = [];
 function showPage(page){
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("productsPage").classList.add("hidden");
-  document.getElementById("cosmeticsPage").classList.add("hidden");
   document.getElementById("cartPage").classList.add("hidden");
+  document.getElementById("aboutPage").classList.add("hidden");
+  document.getElementById("contactPage").classList.add("hidden");
   document.getElementById("billPage").classList.add("hidden");
 
   if(page === "home") document.getElementById("homePage").classList.remove("hidden");
+
   if(page === "products"){
     document.getElementById("productsPage").classList.remove("hidden");
-    displayProducts(products.filter(p=>p.category==="products"));
+    displayProducts(products);
   }
-  if(page === "cosmetics"){
-    document.getElementById("cosmeticsPage").classList.remove("hidden");
-    displayCosmetics();
+
+  if(page === "cart"){
+    document.getElementById("cartPage").classList.remove("hidden");
+    displayCart();
   }
+
+  if(page === "about") document.getElementById("aboutPage").classList.remove("hidden");
+  if(page === "contact") document.getElementById("contactPage").classList.remove("hidden");
 }
 
 // DISPLAY PRODUCTS
@@ -129,25 +181,10 @@ function displayProducts(list){
       <div class="bg-white p-4 rounded shadow text-center">
         <h2 class="font-bold">${p.name}</h2>
         <p>₹${p.price}</p>
-        <button onclick="addToCart(${p.id})" class="bg-blue-500 text-white px-3 py-1 mt-2 rounded">Add</button>
-      </div>
-    `;
-  });
-}
-
-// COSMETICS DISPLAY
-function displayCosmetics(){
-  let container = document.getElementById("cosmeticsProducts");
-  container.innerHTML = "";
-
-  let cosmetics = products.filter(p=>p.category==="cosmetics");
-
-  cosmetics.forEach(p=>{
-    container.innerHTML += `
-      <div class="bg-pink-100 p-4 rounded shadow text-center">
-        <h2 class="font-bold">${p.name}</h2>
-        <p>₹${p.price}</p>
-        <button onclick="addToCart(${p.id})" class="bg-pink-500 text-white px-3 py-1 mt-2 rounded">Add</button>
+        <button onclick="addToCart(${p.id})" 
+          class="bg-blue-500 text-white px-3 py-1 mt-2 rounded">
+          Add to Cart
+        </button>
       </div>
     `;
   });
@@ -180,10 +217,7 @@ function updateCount(){
   document.getElementById("count").innerText = count;
 }
 
-function goToCart(){
-  showPage("cart");
-  document.getElementById("cartPage").classList.remove("hidden");
-
+function displayCart(){
   let container = document.getElementById("cartItems");
   let total = 0;
   container.innerHTML = "";
@@ -222,6 +256,9 @@ function generateBill(){
 
   document.getElementById("billTotal").innerText = total;
 }
+
+// INIT
+showPage("home");
 
 </script>
 
