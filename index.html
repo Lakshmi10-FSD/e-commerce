@@ -2,217 +2,228 @@
 <html>
 <head>
   <title>ShopEasy</title>
-  <script src="https://cdn.tailwindcss.com"></script> 
-</head> 
- 
-<body class="bg-gray-100"> 
- 
-<!-- Navbar --> 
-<div class="bg-black text-white p-4 flex justify-between items-center flex-wrap"> 
-  
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- NAVBAR -->
+<div class="bg-black text-white p-4 flex justify-between items-center">
   <h1 class="text-xl font-bold">ShopEasy</h1>
 
-  <!-- Nav Links -->
   <div class="space-x-4">
-    <button onclick="showCategory('all')" class="hover:text-yellow-400">Home</button>
-    <button onclick="showCategory('fashion')" class="hover:text-yellow-400">Products</button>
-    <button onclick="showCategory('cosmetics')" class="hover:text-yellow-400">Cosmetics</button>
-    <button onclick="showCategory('electronics')" class="hover:text-yellow-400">Electronics</button>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('products')">Products</button>
+    <button onclick="showPage('cosmetics')">Cosmetics</button>
   </div>
 
-  <!-- Cart -->
-  <button onclick="goToCart()">
-    Cart 🛒 <span id="count">0</span>
+  <button onclick="goToCart()">Cart 🛒 <span id="count">0</span></button>
+</div>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="p-6 text-center">
+  <h1 class="text-3xl font-bold mb-4">Welcome to ShopEasy 🛍️</h1>
+  <p class="text-gray-600">Best place to buy your favorite products</p>
+
+  <div class="mt-6">
+    <button onclick="showPage('products')" 
+      class="bg-blue-500 text-white px-4 py-2 rounded">
+      Shop Now
+    </button>
+  </div>
+</div>
+
+<!-- PRODUCTS PAGE -->
+<div id="productsPage" class="hidden">
+  
+  <!-- Search -->
+  <div class="p-4">
+    <input type="text" placeholder="Search product..."
+      onkeyup="searchProduct(this.value)"
+      class="border p-2 w-full rounded">
+  </div>
+
+  <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div>
+</div>
+
+<!-- COSMETICS PAGE -->
+<div id="cosmeticsPage" class="hidden p-6">
+  <h1 class="text-2xl font-bold mb-4">Cosmetics 💄</h1>
+  <div id="cosmeticsProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+</div>
+
+<!-- CART PAGE -->
+<div id="cartPage" class="hidden p-6">
+  <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+  <div id="cartItems"></div>
+
+  <h2 class="text-xl mt-4 font-bold">
+    Total: ₹<span id="total">0</span>
+  </h2>
+
+  <button onclick="generateBill()" class="bg-green-500 text-white px-4 py-2 mt-4 rounded">
+    Checkout
   </button>
 
+  <button onclick="showPage('home')" class="bg-gray-500 text-white px-4 py-2 mt-2 rounded">
+    Back
+  </button>
 </div>
- 
-<!-- Search --> 
-<div class="p-4"> 
-  <input type="text" placeholder="Search product..." 
-    onkeyup="searchProduct(this.value)" 
-    class="border p-2 w-full rounded"> 
-</div> 
- 
-<!-- Products --> 
-<div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"></div> 
- 
-<!-- Cart Page --> 
-<div id="cartPage" class="hidden p-6"> 
-  <h1 class="text-2xl font-bold mb-4">Your Cart</h1> 
- 
-  <div id="cartItems"></div> 
- 
-  <h2 class="text-xl mt-4 font-bold"> 
-    Total: ₹<span id="total">0</span> 
-  </h2> 
- 
-  <button onclick="generateBill()" 
-    class="bg-green-500 text-white px-4 py-2 mt-4 rounded"> 
-    Checkout 
-  </button> 
- 
-  <button onclick="goToHome()" 
-    class="bg-gray-500 text-white px-4 py-2 mt-2 rounded"> 
-    Back 
-  </button> 
-</div> 
- 
-<!-- Bill Page --> 
-<div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded"> 
-  <h1 class="text-xl font-bold text-center mb-2">ShopEasy</h1> 
-  <p class="text-center text-gray-500 mb-4">Bill Receipt</p> 
- 
-  <div id="billItems"></div> 
- 
-  <h2 class="text-xl font-bold mt-4"> 
-    Total: ₹<span id="billTotal">0</span> 
-  </h2> 
- 
-  <button onclick="window.print()" 
-    class="bg-black text-white px-4 py-2 mt-4 w-full rounded"> 
-    Print Bill 
-  </button> 
- 
-  <button onclick="goToHome()" 
-    class="bg-gray-500 text-white px-4 py-2 mt-2 w-full rounded"> 
-    Back Home 
-  </button> 
-</div> 
- 
-<script> 
-// PRODUCTS 
-let products = [ 
-  {id:1, name:"T-Shirt", price:500, category:"fashion"}, 
-  {id:2, name:"Shoes", price:1200, category:"fashion"}, 
-  {id:3, name:"Watch", price:800, category:"electronics"}, 
-  {id:4, name:"Bag", price:900, category:"fashion"},
-  {id:5, name:"Face Cream", price:300, category:"cosmetics"},
-  {id:6, name:"Lipstick", price:250, category:"cosmetics"}
-]; 
- 
-let cart = []; 
- 
-// DISPLAY PRODUCTS 
-function displayProducts(list = products){ 
-  let container = document.getElementById("products"); 
-  container.innerHTML = ""; 
- 
-  list.forEach(p => { 
-    container.innerHTML += ` 
-      <div class="bg-white p-4 rounded shadow text-center"> 
-        <h2 class="text-lg font-bold">${p.name}</h2> 
-        <p>₹${p.price}</p> 
-        <button onclick="addToCart(${p.id})" 
-          class="bg-blue-500 text-white px-3 py-1 mt-2 rounded"> 
-          Add 
-        </button> 
-      </div> 
-    `; 
-  }); 
-} 
- 
-// CATEGORY FILTER
-function showCategory(category){
-  if(category === "all"){
-    displayProducts(products);
-  } else {
-    let filtered = products.filter(p => p.category === category);
-    displayProducts(filtered);
+
+<!-- BILL PAGE -->
+<div id="billPage" class="hidden p-6 max-w-md mx-auto bg-white shadow rounded">
+  <h1 class="text-xl font-bold text-center">ShopEasy</h1>
+  <p class="text-center text-gray-500">Bill Receipt</p>
+
+  <div id="billItems"></div>
+
+  <h2 class="text-xl font-bold mt-4">
+    Total: ₹<span id="billTotal">0</span>
+  </h2>
+
+  <button onclick="window.print()" class="bg-black text-white px-4 py-2 mt-4 w-full rounded">
+    Print
+  </button>
+</div>
+
+<script>
+
+// PRODUCTS DATA
+let products = [
+  {id:1, name:"T-Shirt", price:500, category:"products"},
+  {id:2, name:"Shoes", price:1200, category:"products"},
+  {id:3, name:"Watch", price:800, category:"products"},
+  {id:4, name:"Bag", price:900, category:"products"},
+  {id:5, name:"Lipstick", price:250, category:"cosmetics"},
+  {id:6, name:"Face Cream", price:300, category:"cosmetics"}
+];
+
+let cart = [];
+
+// PAGE SWITCH
+function showPage(page){
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("productsPage").classList.add("hidden");
+  document.getElementById("cosmeticsPage").classList.add("hidden");
+  document.getElementById("cartPage").classList.add("hidden");
+  document.getElementById("billPage").classList.add("hidden");
+
+  if(page === "home") document.getElementById("homePage").classList.remove("hidden");
+  if(page === "products"){
+    document.getElementById("productsPage").classList.remove("hidden");
+    displayProducts(products.filter(p=>p.category==="products"));
+  }
+  if(page === "cosmetics"){
+    document.getElementById("cosmeticsPage").classList.remove("hidden");
+    displayCosmetics();
   }
 }
- 
-// ADD TO CART 
-function addToCart(id){ 
-  let item = cart.find(p => p.id === id); 
- 
-  if(item){ 
-    item.qty += 1; 
-  } else { 
-    let product = products.find(p => p.id === id); 
-    cart.push({...product, qty:1}); 
-  } 
- 
-  updateCount(); 
-} 
- 
-// UPDATE COUNT 
-function updateCount(){ 
-  let count = cart.reduce((sum, item) => sum + item.qty, 0); 
-  document.getElementById("count").innerText = count; 
-} 
- 
-// DISPLAY CART 
-function displayCart(){ 
-  let container = document.getElementById("cartItems"); 
-  let total = 0; 
-  container.innerHTML = ""; 
- 
-  if(cart.length === 0){ 
-    container.innerHTML = "<p>Your cart is empty 😢</p>"; 
-  } 
- 
-  cart.forEach(item => { 
-    total += item.price * item.qty; 
- 
-    container.innerHTML += ` 
-      <div class="flex justify-between bg-white p-2 mb-2 shadow items-center"> 
-        <span>${item.name} (${item.qty})</span> 
-        <span>₹${item.price * item.qty}</span> 
-      </div> 
-    `; 
-  }); 
- 
-  document.getElementById("total").innerText = total; 
-} 
- 
-// NAVIGATION 
-function goToCart(){ 
-  document.getElementById("products").classList.add("hidden"); 
-  document.getElementById("cartPage").classList.remove("hidden"); 
-  displayCart(); 
-} 
- 
-function goToHome(){ 
-  document.getElementById("products").classList.remove("hidden"); 
-  document.getElementById("cartPage").classList.add("hidden"); 
-  document.getElementById("billPage").classList.add("hidden"); 
-} 
- 
-// SEARCH 
-function searchProduct(value){ 
-  let filtered = products.filter(p => 
-    p.name.toLowerCase().includes(value.toLowerCase()) 
-  ); 
-  displayProducts(filtered); 
-} 
- 
-// BILL GENERATION 
-function generateBill(){ 
-  document.getElementById("cartPage").classList.add("hidden"); 
-  document.getElementById("billPage").classList.remove("hidden"); 
- 
-  let container = document.getElementById("billItems"); 
-  let total = 0; 
-  container.innerHTML = ""; 
- 
-  cart.forEach(item => { 
-    total += item.price * item.qty; 
- 
-    container.innerHTML += ` 
-      <div class="flex justify-between"> 
-        <span>${item.name}</span> 
-        <span>₹${item.price * item.qty}</span> 
-      </div> 
-    `; 
-  }); 
- 
-  document.getElementById("billTotal").innerText = total; 
-} 
- 
-// INIT 
-displayProducts(); 
-</script> 
- 
-</body> 
+
+// DISPLAY PRODUCTS
+function displayProducts(list){
+  let container = document.getElementById("products");
+  container.innerHTML = "";
+
+  list.forEach(p=>{
+    container.innerHTML += `
+      <div class="bg-white p-4 rounded shadow text-center">
+        <h2 class="font-bold">${p.name}</h2>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})" class="bg-blue-500 text-white px-3 py-1 mt-2 rounded">Add</button>
+      </div>
+    `;
+  });
+}
+
+// COSMETICS DISPLAY
+function displayCosmetics(){
+  let container = document.getElementById("cosmeticsProducts");
+  container.innerHTML = "";
+
+  let cosmetics = products.filter(p=>p.category==="cosmetics");
+
+  cosmetics.forEach(p=>{
+    container.innerHTML += `
+      <div class="bg-pink-100 p-4 rounded shadow text-center">
+        <h2 class="font-bold">${p.name}</h2>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})" class="bg-pink-500 text-white px-3 py-1 mt-2 rounded">Add</button>
+      </div>
+    `;
+  });
+}
+
+// SEARCH
+function searchProduct(value){
+  let filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value.toLowerCase())
+  );
+  displayProducts(filtered);
+}
+
+// CART
+function addToCart(id){
+  let item = cart.find(p=>p.id===id);
+
+  if(item){
+    item.qty++;
+  }else{
+    let product = products.find(p=>p.id===id);
+    cart.push({...product, qty:1});
+  }
+
+  updateCount();
+}
+
+function updateCount(){
+  let count = cart.reduce((sum,item)=>sum+item.qty,0);
+  document.getElementById("count").innerText = count;
+}
+
+function goToCart(){
+  showPage("cart");
+  document.getElementById("cartPage").classList.remove("hidden");
+
+  let container = document.getElementById("cartItems");
+  let total = 0;
+  container.innerHTML = "";
+
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+    container.innerHTML += `
+      <div class="flex justify-between bg-white p-2 mb-2">
+        <span>${item.name} (${item.qty})</span>
+        <span>₹${item.price * item.qty}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+// BILL
+function generateBill(){
+  document.getElementById("cartPage").classList.add("hidden");
+  document.getElementById("billPage").classList.remove("hidden");
+
+  let container = document.getElementById("billItems");
+  let total = 0;
+  container.innerHTML = "";
+
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+    container.innerHTML += `
+      <div class="flex justify-between">
+        <span>${item.name}</span>
+        <span>₹${item.price * item.qty}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("billTotal").innerText = total;
+}
+
+</script>
+
+</body>
 </html>
