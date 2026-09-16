@@ -1,48 +1,46 @@
 <html>
-<head>
-  <title>ShopEasy</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+	<head><title>ECOMMERCE</title>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+		<body>
+		<nav class="fixed top-0 left-0 w-full bg-blue-300 shadow-md z-50">
+		<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+			<img src=class="w-40 h-20 max-w-full object-cover">
 
-<body class="bg-gray-100">	
+    <!-- Desktop Menu -->
+			<ul class="hidden md:flex space-x-6 text-blue-900 font-serif text-lg">
+			  <li><a href="index.html" class="hover:text-green-600">Home</a></li>
+			  <li><a href="products.html" class="hover:text-green-600">Products</a></li>
+			  <li><a href="Card.html" class="hover:text-green-600">Card</a></li>
+			  <li><a href="About us.html" class="hover:text-green-600">About Us</a></li>
+			  <li><a href="contact .html" class="hover:text-green-600">Contact</a></li>
+			</ul>
 
+    <!-- Toggle Button -->
+		<button onclick="toggleDark()" class="text-lg md:text-xl">🌙</button>
+			<label for="menuToggle" class="md:hidden flex flex-col space-y-1.5 cursor-pointer">
+			  <span class="block w-6 h-0.5 bg-gray-800"></span>
+			  <span class="block w-6 h-0.5 bg-gray-800"></span>
+			  <span class="block w-6 h-0.5 bg-gray-800"></span>
+			</label>
+		</div>
 
-<!-- ================= NAVBAR ================= -->  
-<div class="bg-black text-white p-4 flex justify-between items-center">  
-  
-  <h1 class="text-xl font-bold">ShopEasy</h1>  
-  
-  <!-- Desktop Menu --> 
-  <div class="hidden md:flex space-x-4">  
-    <button onclick="showPage('home')" class="hover:text-yellow-400">Home</button>  
-    <button onclick="showPage('products')" class="hover:text-yellow-400">Products</button>  
-    <button onclick="showPage('cart')" class="hover:text-yellow-400">Cart</button>  
-    <button onclick="showPage('about')" class="hover:text-yellow-400">About</button>  
-    <button onclick="showPage('contact')" class="hover:text-yellow-400">Contact</button>  
-  </div>  
-  
-  <!-- Desktop Cart --> 
-  <button onclick="showPage('cart')" class="hidden md:block">  
-    Cart 🛒 <span id="count">0</span>  
-  </button>  
- 
-  <!-- Mobile Menu Button --> 
-  <button onclick="toggleMenu()" class="md:hidden text-3xl block">☰</button> 
-  
-</div>   
- 
-<!-- Mobile Menu --> 
-<div id="mobileMenu" class="hidden bg-black text-white flex flex-col space-y-3 p-4 md:hidden w-full"> 
-  <button onclick="showPage('home'); toggleMenu()">Home</button> 
-  <button onclick="showPage('products'); toggleMenu()">Products</button> 
-  <button onclick="showPage('cart'); toggleMenu()">Cart</button> 
-  <button onclick="showPage('about'); toggleMenu()">About</button> 
-  <button onclick="showPage('contact'); toggleMenu()">Contact</button> 
- 
-  <div> 
-    Cart 🛒 <span id="countMobile">0</span> 
-  </div> 
-</div>
+  <!-- Hidden Checkbox -->
+			<input type="checkbox" id="menuToggle" class="hidden peer">
+
+  <!-- Mobile Menu -->
+		  <div class="hidden peer-checked:block md:hidden bg-orange-200 px-6 py-6">
+			<ul class="flex flex-col space-y-4 text-white text-lg">
+			  <li><a href="index.html" class="block hover:text-pink-300">Home</a></li>
+			  <li><a href="products.html" class="hover:text-orange-400">Products</a></li>
+				<li><a href="card.html" class="hover:text-orange-400">Card</a></li>
+				<li><a href="About us.html" class="hover:text-orange-400">About</a></li>
+				<li><a href="contact .html"class="hover:text-orange-400">Contact</a></li>
+			</ul>
+		  </div>
+		</nav>
 
 
 <!-- ================= HOME PAGE (ADVANCED) ================= -->
