@@ -1,193 +1,173 @@
+<!DOCTYPE html>
 <html>
-	<head><title>ECOMMERCE</title>
-	<meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-	</head>
-		<body>
-		<nav class="fixed top-0 left-0 w-full bg-blue-300 shadow-md z-50">
-		<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-			<img src=class="w-40 h-20 max-w-full object-cover">
+<head>
+  <title>ShopEasy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Desktop Menu -->
-			<ul class="hidden md:flex space-x-6 text-blue-900 font-serif text-lg">
-			  <li><a href="index.html" class="hover:text-green-600">Home</a></li>
-			  <li><a href="products.html" class="hover:text-green-600">Products</a></li>
-			  <li><a href="Card.html" class="hover:text-green-600">Card</a></li>
-			  <li><a href="About us.html" class="hover:text-green-600">About Us</a></li>
-			  <li><a href="contact .html" class="hover:text-green-600">Contact</a></li>
-			</ul>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-    <!-- Toggle Button -->
-		<button onclick="toggleDark()" class="text-lg md:text-xl">🌙</button>
-			<label for="menuToggle" class="md:hidden flex flex-col space-y-1.5 cursor-pointer">
-			  <span class="block w-6 h-0.5 bg-gray-800"></span>
-			  <span class="block w-6 h-0.5 bg-gray-800"></span>
-			  <span class="block w-6 h-0.5 bg-gray-800"></span>
-			</label>
-		</div>
+<body class="bg-gray-100">
 
-  <!-- Hidden Checkbox -->
-			<input type="checkbox" id="menuToggle" class="hidden peer">
+<!-- ================= NAVBAR ================= -->
+<nav class="bg-blue-500 text-white p-4 flex justify-between">
+  <h1 class="text-xl font-bold">ShopEasy</h1>
 
-  <!-- Mobile Menu -->
-		  <div class="hidden peer-checked:block md:hidden bg-orange-200 px-6 py-6">
-			<ul class="flex flex-col space-y-4 text-white text-lg">
-			  <li><a href="index.html" class="block hover:text-pink-300">Home</a></li>
-			  <li><a href="products.html" class="hover:text-orange-400">Products</a></li>
-				<li><a href="card.html" class="hover:text-orange-400">Card</a></li>
-				<li><a href="About us.html" class="hover:text-orange-400">About</a></li>
-				<li><a href="contact .html"class="hover:text-orange-400">Contact</a></li>
-			</ul>
-		  </div>
-		</nav>
+  <div class="space-x-4">
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('products')">Products</button>
+    <button onclick="showPage('cart')">
+      Cart 🛒 <span id="count">0</span>
+    </button>
+  </div>
+</nav>
 
-
-<!-- ================= HOME PAGE (ADVANCED) ================= -->
+<!-- ================= HOME ================= -->
 <div id="homePage" class="p-6">
+  <h1 class="text-4xl font-bold text-center">Welcome to ShopEasy 🛍️</h1>
+  <p class="text-center mt-3">Best online shopping website</p>
 
-  <!-- HERO -->
-  <div class="text-center py-10">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">
-      Welcome to ShopEasy 🛍️
-    </h1>
-
-    <p class="text-gray-600 text-lg mb-6">
-      Shop smarter, faster, and easier — all in one place
-    </p>
-
-    <button onclick="showPage('products')" 
-      class="bg-blue-500 text-white px-6 py-3 rounded text-lg hover:bg-blue-600">
+  <div class="text-center mt-6">
+    <button onclick="showPage('products')"
+      class="bg-blue-500 text-white px-6 py-3 rounded">
       Shop Now
     </button>
   </div>
-
-
-  <!-- FEATURES -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-
-    <div class="bg-white p-6 rounded shadow text-center">
-      <h2 class="text-xl font-bold mb-2">🚚 Fast Delivery</h2>
-      <p class="text-gray-500">
-        Quick and reliable delivery at your doorstep within days.
-      </p>
-    </div>
-
-    <div class="bg-white p-6 rounded shadow text-center">
-      <h2 class="text-xl font-bold mb-2">💰 Best Offers</h2>
-      <p class="text-gray-500">
-        Get the best deals and discounts on all products.
-      </p>
-    </div>
-
-    <div class="bg-white p-6 rounded shadow text-center">
-      <h2 class="text-xl font-bold mb-2">🔒 Secure Payment</h2>
-      <p class="text-gray-500">
-        Safe and trusted payment methods for worry-free shopping.
-      </p>
-    </div>
-
-  </div>
-
-
-  <!-- CATEGORY SECTION -->
-  <div class="mt-12">
-    <h2 class="text-2xl font-bold mb-6 text-center">Shop by Category</h2>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-      <div onclick="showPage('products')" 
-        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
-        <h3 class="font-bold">👕 Fashion</h3>
-        <p class="text-gray-500 text-sm">T-Shirts, Shoes</p>
-      </div>
-
-      <div onclick="showPage('products')" 
-        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
-        <h3 class="font-bold">⌚ Electronics</h3>
-        <p class="text-gray-500 text-sm">Watches, Gadgets</p>
-      </div>
-
-      <div onclick="showPage('products')" 
-        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
-        <h3 class="font-bold">💄 Cosmetics</h3>
-        <p class="text-gray-500 text-sm">Lipstick, Cream</p>
-      </div>
-
-      <div onclick="showPage('products')" 
-        class="bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-gray-100">
-        <h3 class="font-bold">👜 Accessories</h3>
-        <p class="text-gray-500 text-sm">Bags, Wallets</p>
-      </div>
-
-    </div>
-  </div>
-
-
-  <!-- WHY CHOOSE US -->
-  <div class="mt-12 bg-white p-6 rounded shadow text-center">
-    <h2 class="text-2xl font-bold mb-4">Why Choose ShopEasy?</h2>
-
-    <ul class="text-gray-600 space-y-2">
-      <li>✔ High quality products</li>
-      <li>✔ Affordable pricing</li>
-      <li>✔ Easy return policy</li>
-      <li>✔ 24/7 customer support</li>
-    </ul>
-  </div>
-
 </div>
+
+<!-- ================= PRODUCTS ================= -->
+<div id="productsPage" class="p-6 hidden">
+
+  <h1 class="text-3xl font-bold text-center mb-6">Products</h1>
+
+  <!-- Search -->
+  <input type="text" placeholder="Search..."
+    onkeyup="searchProduct(this.value)"
+    class="border p-2 mb-6 w-full md:w-1/2 mx-auto block">
+
+  <!-- Category -->
+  <div class="text-center mb-6">
+    <button onclick="filterCategory('all')" class="bg-gray-200 px-3 py-1 m-1">All</button>
+    <button onclick="filterCategory('fashion')" class="bg-gray-200 px-3 py-1 m-1">Fashion</button>
+    <button onclick="filterCategory('electronics')" class="bg-gray-200 px-3 py-1 m-1">Electronics</button>
+  </div>
+
+  <!-- Product List -->
+  <div id="productList" class="grid md:grid-cols-3 gap-6">
+
+    <div data-name="tshirt" data-category="fashion" class="bg-white p-4 shadow">
+      <h2>T-Shirt</h2>
+      <p>₹499</p>
+      <button onclick="addToCart('T-Shirt',499)" class="bg-blue-500 text-white px-3 py-1 mt-2">Add</button>
+    </div>
+
+    <div data-name="watch" data-category="electronics" class="bg-white p-4 shadow">
+      <h2>Watch</h2>
+      <p>₹999</p>
+      <button onclick="addToCart('Watch',999)" class="bg-blue-500 text-white px-3 py-1 mt-2">Add</button>
+    </div>
+
+    <div data-name="shoes" data-category="fashion" class="bg-white p-4 shadow">
+      <h2>Shoes</h2>
+      <p>₹1499</p>
+      <button onclick="addToCart('Shoes',1499)" class="bg-blue-500 text-white px-3 py-1 mt-2">Add</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= CART ================= -->
+<div id="cartPage" class="p-6 hidden">
+
+  <h1 class="text-3xl font-bold text-center mb-6">Your Cart 🛒</h1>
+
+  <div id="cartItems"></div>
+
+  <h2 class="text-xl font-bold mt-4">Total: ₹<span id="total">0</span></h2>
+</div>
+
+<!-- ================= SCRIPT ================= -->
 <script>
-function toggleMenu(){
-  let menu = document.getElementById("mobileMenu");
-  menu.classList.toggle("hidden");
+let cart = [];
+
+// Page Switch
+function showPage(page){
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("productsPage").classList.add("hidden");
+  document.getElementById("cartPage").classList.add("hidden");
+
+  document.getElementById(page + "Page").classList.remove("hidden");
+
+  if(page === "cart"){
+    displayCart();
+  }
+}
+
+// Add to Cart
+function addToCart(name, price){
+  let item = cart.find(p => p.name === name);
+
+  if(item){
+    item.qty++;
+  } else {
+    cart.push({name, price, qty:1});
+  }
+
+  updateCount();
+}
+
+// Cart Count
+function updateCount(){
+  let count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById("count").innerText = count;
+}
+
+// Display Cart
+function displayCart(){
+  let container = document.getElementById("cartItems");
+  let total = 0;
+
+  container.innerHTML = "";
+
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+
+    container.innerHTML += `
+      <div class="bg-white p-4 mb-3 shadow flex justify-between">
+        <div>
+          <h2>${item.name}</h2>
+          <p>₹${item.price} x ${item.qty}</p>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+// Search
+function searchProduct(value){
+  let items = document.querySelectorAll("#productList > div");
+  value = value.toLowerCase();
+
+  items.forEach(item=>{
+    let name = item.dataset.name;
+    item.style.display = name.includes(value) ? "block" : "none";
+  });
+}
+
+// Filter
+function filterCategory(cat){
+  let items = document.querySelectorAll("#productList > div");
+
+  items.forEach(item=>{
+    let category = item.dataset.category;
+    item.style.display = (cat === "all" || category === cat) ? "block" : "none";
+  });
 }
 </script>
 
-
-
-
-<!-- ================= FOOTER ================= -->
-<footer class="bg-black text-white mt-10">
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-
-    <!-- About -->
-    <div>
-      <h2 class="text-lg font-bold mb-2">ShopEasy</h2>
-      <p class="text-gray-400 text-sm">
-        ShopEasy is your trusted online shopping platform offering quality products 
-        at affordable prices with fast delivery and secure payments.
-      </p>
-    </div>
-
-    <!-- Quick Links -->
-    <div>
-      <h2 class="text-lg font-bold mb-2">Quick Links</h2>
-      <ul class="text-gray-400 space-y-1 text-sm">
-        <li><button onclick="showPage('home')" class="hover:text-white">Home</button></li>
-        <li><button onclick="showPage('products')" class="hover:text-white">Products</button></li>
-        <li><button onclick="showPage('cart')" class="hover:text-white">Cart</button></li>
-        <li><button onclick="showPage('about')" class="hover:text-white">About</button></li>
-        <li><button onclick="showPage('contact')" class="hover:text-white">Contact</button></li>
-      </ul>
-    </div>
-
-    <!-- Contact -->
-    <div>
-      <h2 class="text-lg font-bold mb-2">Contact</h2>
-      <p class="text-gray-400 text-sm">📧 support@shopeasy.com</p>
-      <p class="text-gray-400 text-sm">📞 +91 98765 43210</p>
-      <p class="text-gray-400 text-sm">📍 India</p>
-    </div>
-
-  </div>
-
-  <!-- Bottom -->
-  <div class="text-center text-gray-500 text-sm border-t border-gray-700 py-3">
-    © 2026 ShopEasy. All rights reserved.
-  </div>
-
-</footer>
 </body>
 </html>
